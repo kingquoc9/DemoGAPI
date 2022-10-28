@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DemoGCS.styles.css" asp-append-version="true" />
+    <link href="~/lib/datatable/datatables-1.12.1/css/jquery.datatables.css" rel="stylesheet" />
+    <link href="~/lib/datatable/datatables-1.12.1/css/datatables.bootstrap5.css" rel="stylesheet" />
+    <link href="~/lib/datatable/fixedheader-3.2.4/css/fixedheader.bootstrap5.css" rel="stylesheet" />
+    <link href="~/lib/datatable/buttons-2.2.3/css/buttons.bootstrap5.css" rel="stylesheet" />
+   
+    <link href="~/lib/datatable/responsive-2.3.0/css/responsive.bootstrap5.css" rel="stylesheet" />
+    
 </head>
 <body>
     <header>
@@ -19,12 +26,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -42,7 +44,10 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/datatable/datatables-1.12.1/js/jquery.datatables.js"></script>
+    <script src="~/lib/datatable/datatables-1.12.1/js/dataTables.bootstrap5.js"></script>
+    <script src="~/lib/datatable/fixedheader-3.2.4/js/fixedheader.bootstrap5.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

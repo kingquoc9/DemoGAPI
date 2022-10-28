@@ -34,9 +34,21 @@ builder.Services.AddSwaggerGen(options => {
         }
     });
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyAllowedOrigins",
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:7188") // note the port is included 
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
+
 
 var app = builder.Build();
-
+app.UseCors("MyAllowedOrigins");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

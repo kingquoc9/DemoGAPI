@@ -18,7 +18,7 @@ namespace DemoGAPI.Controllers
         }
         //Get all WorkOrders
         [HttpGet]
-        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+       
         public async Task<IEnumerable<WorkOrder>> GetAllWorkOrders()
         {
             return await _context.WorkOrders.ToListAsync();
