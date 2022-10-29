@@ -25,7 +25,7 @@ namespace DemoGAPI.Controllers
         }
         //Get WorkOrder by id
         [HttpGet("{id}")]
-        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Detail(int id)
         {
             if (id < 1)
@@ -41,7 +41,7 @@ namespace DemoGAPI.Controllers
 
         //Create new WorkOrders
         [HttpPost]
-        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+       // [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Create(WorkOrder order)
         {
             _context.Add(order);
@@ -50,7 +50,7 @@ namespace DemoGAPI.Controllers
         }
         //Update WorkOrders
         [HttpPut]
-        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+      //  [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Update(WorkOrder orderData)
         {
             if (orderData == null || orderData.OrdersId == 0)
@@ -71,14 +71,15 @@ namespace DemoGAPI.Controllers
             order.ActualQuantity = orderData.ActualQuantity;
             order.Note = orderData.Note;
             order.ActusalSetupStart = orderData.ActusalSetupStart;
-          
+            order.Status = orderData.Status;
+
 
             await _context.SaveChangesAsync();
             return Ok();
         }
         //Delete WorkOrders
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+       // [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Delete(int id)
         {
             if (id < 1)

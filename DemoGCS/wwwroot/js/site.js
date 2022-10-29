@@ -29,7 +29,8 @@ $(document).ready(function () {
             { "data": "quantity" },
             { "data": "actualQuantity" },
             { "data": "note" },
-            { "data": "actusalSetupStart" }
+            { "data": "actusalSetupStart" },
+            { "data": "status" }
         ]
     
     });
@@ -55,6 +56,37 @@ $('#Pause').click(function () {
 // Start setup button
 $('#StartS').click(function () {
     alert(' row(s) selected');
+    var t = $('#wot').DataTable();
+       
+        var sR = t.rows('.selected').data().toArray();
+        //var SS = {
+        //    ordersId = sR.ordersId;
+        //    ordersName = sR.ordersName;
+        //    machinesId = sR.machinesId,
+        //    product = sR.product,
+        //    resourceGroupName = sR.resourceGroupName,
+        //    resourceName = sR.resourceName,
+        //    setupStart = sR.setupStart,
+        //    endTime = sR.endTime,
+        //    quantity = sR.quantity,
+        //    actualQuantity = sR.actualQuantity,
+        //    note = sR.note,
+        //    actusalSetupStart = '$.now()',
+        //    status = 'Starting'
+        //}
+    console.log(sR);
+        $.ajax({
+            type: 'PUT',
+            url: 'https://localhost:7093/api/orders',
+            dataType: 'json',
+            data: JSON.stringify(sR) ,
+            success: function (data) {
+                alert(json);
+                console.log(json);
+            }
+        });
+    
+
 });
 // Complete button
 $('#Complete').click(function () {

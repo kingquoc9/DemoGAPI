@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoGAPI.Migrations
 {
     [DbContext(typeof(DG1Context))]
-    [Migration("20221026080159_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20221029025038_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,6 +78,10 @@ namespace DemoGAPI.Migrations
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("OrdersId");
 

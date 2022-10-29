@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DemoGAPI.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,7 +26,8 @@ namespace DemoGAPI.Migrations
                     Quantity = table.Column<decimal>(type: "numeric(18,0)", nullable: false),
                     ActualQuantity = table.Column<decimal>(type: "numeric(18,0)", nullable: true),
                     Note = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ActusalSetupStart = table.Column<DateTime>(type: "datetime", nullable: true)
+                    ActusalSetupStart = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {

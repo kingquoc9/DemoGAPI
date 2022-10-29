@@ -21,5 +21,6 @@ namespace DemoGAPI.Models
         public decimal? ActualQuantity { get; set; }
         public string? Note { get; set; }
         public DateTime? ActusalSetupStart { get; set; }
+        public string? Status { get; set; }
     }
 }

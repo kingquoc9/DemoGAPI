@@ -56,6 +56,8 @@ namespace DemoGAPI.Models
                 entity.Property(e => e.SetupStart).HasColumnType("datetime");
 
                 entity.Property(e => e.StartTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Status).HasMaxLength(100);
             });
 
             OnModelCreatingPartial(modelBuilder);
