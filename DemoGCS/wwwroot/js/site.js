@@ -45,9 +45,53 @@ $(document).ready(function () {
     });
     //
 });
+
+var currentdate = new Date();
+var datetime =  currentdate.getFullYear() + "-"
+    + (currentdate.getMonth() + 1) + "-"
+    + currentdate.getDate() + "T"
+    + currentdate.getHours() + ":"
+    + currentdate.getMinutes() + ":"
+    + currentdate.getSeconds();
+
 // start button
 $('#Start').click(function () {
-    
+    var t = $('#wot').DataTable();
+    var sr = JSON.stringify(t.rows('.selected').data().toArray());
+    var ts = sr.substring(1, sr.length - 1);// cut this"[]" out to get the object
+    var tts = JSON.parse(ts);
+    var dt = {
+        "ordersId": tts.ordersId,
+        "ordersName": tts.ordersName,
+        "machinesId": tts.machinesId,
+        "product": tts.product,
+        "resourceGroupName": tts.resourceGroupName,
+        "resourceName": tts.resourceName,
+        "setupStart": tts.setupStart,
+        "startTime": tts.startTime,
+        "endTime": tts.endTime,
+        "quantity": tts.quantity,
+        "actualQuantity": tts.actualQuantity,
+        "note": tts.note,
+        "actusalSetupStart": datetime,
+        "status": "Starting setup"
+    };
+    var dts = JSON.stringify(dt);
+    console.log(dts);
+    $.ajax({
+        type: 'PUT',
+        url: 'https://localhost:7093/api/orders',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        dataType: 'json',
+        data: dts,
+        success: function (data) {
+            alert("Start running")
+            console.log(data);
+        }
+    });
+
 });
 // Pasue button
 $('#Pause').click(function () {
@@ -55,34 +99,22 @@ $('#Pause').click(function () {
 });
 // Start setup button
 $('#StartS').click(function () {
-    alert(' row(s) selected');
     var t = $('#wot').DataTable();
-       
-        var sR = t.rows('.selected').data().toArray();
-        //var SS = {
-        //    ordersId = sR.ordersId;
-        //    ordersName = sR.ordersName;
-        //    machinesId = sR.machinesId,
-        //    product = sR.product,
-        //    resourceGroupName = sR.resourceGroupName,
-        //    resourceName = sR.resourceName,
-        //    setupStart = sR.setupStart,
-        //    endTime = sR.endTime,
-        //    quantity = sR.quantity,
-        //    actualQuantity = sR.actualQuantity,
-        //    note = sR.note,
-        //    actusalSetupStart = '$.now()',
-        //    status = 'Starting'
-        //}
-    console.log(sR);
-        $.ajax({
-            type: 'PUT',
-            url: 'https://localhost:7093/api/orders',
-            dataType: 'json',
-            data: JSON.stringify(sR) ,
+    var sr = JSON.stringify(t.rows('.selected').data().toArray());
+/*    var sr = JSON.stringify(t.rows('.selected').data().toArray());*/
+    var ts = sr.substring(1, sr.length - 1);// cut this"[]" out to get the object
+    console.log(ts);
+    $.ajax({
+        type: 'PUT',
+        url: 'https://localhost:7093/api/orders',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        dataType:'json',
+        data: ts,
             success: function (data) {
-                alert(json);
-                console.log(json);
+                
+                console.log(data);
             }
         });
     
@@ -96,3 +128,21 @@ $('#Complete').click(function () {
 $('#Cancel').click(function () {
 
 });
+
+//Test code
+
+// Get od by Id
+//var t = $('#wot').DataTable();
+//var idx = JSON.stringify(t.cell('.selected', 0).data());
+//console.log(idx);
+//var urlx = "https://localhost:7093/api/orders/" + idx;
+//$.ajax({
+//    type: 'GET',
+//    url: urlx,
+//    dataType: 'json',
+
+//    success: function (data) {
+//        alert(data);
+//        console.log(data);
+//    }
+//});

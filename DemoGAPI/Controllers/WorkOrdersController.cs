@@ -24,7 +24,7 @@ namespace DemoGAPI.Controllers
             return await _context.WorkOrders.ToListAsync();
         }
         //Get WorkOrder by id
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         //[Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Detail(int id)
         {
