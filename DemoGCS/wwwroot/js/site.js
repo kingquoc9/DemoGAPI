@@ -47,45 +47,45 @@ $(document).ready(function () {
 });
 
 var currentdate = new Date();
-var datetime =  currentdate.getFullYear() + "-"
-    + (currentdate.getMonth() + 1) + "-"
-    + currentdate.getDate() + "T"
-    + currentdate.getHours() + ":"
-    + currentdate.getMinutes() + ":"
-    + currentdate.getSeconds();
+var datetime = currentdate.getFullYear(0) + "-"
+    + ("0" + (currentdate.getMonth(0) + 1)).slice(-2) + "-"
+    + ("0" + currentdate.getDate(0)).slice(-2) + "T"
+    + ("0" + currentdate.getHours(0)).slice(-2) + ":"
+    + ("0" + currentdate.getMinutes(0)).slice(-2) + ":"
+    + ("0" + currentdate.getSeconds(0)).slice(-2) + "."
+    + ("0" + currentdate.getMilliseconds()).slice(-2);
 
 // start button
 $('#Start').click(function () {
     var t = $('#wot').DataTable();
     var sr = JSON.stringify(t.rows('.selected').data().toArray());
-    var ts = sr.substring(1, sr.length - 1);// cut this"[]" out to get the object
-    var tts = JSON.parse(ts);
-    var dt = {
-        "ordersId": tts.ordersId,
-        "ordersName": tts.ordersName,
-        "machinesId": tts.machinesId,
-        "product": tts.product,
-        "resourceGroupName": tts.resourceGroupName,
-        "resourceName": tts.resourceName,
-        "setupStart": tts.setupStart,
-        "startTime": tts.startTime,
-        "endTime": tts.endTime,
-        "quantity": tts.quantity,
-        "actualQuantity": tts.actualQuantity,
-        "note": tts.note,
+    var ts = JSON.parse(sr.substring(1, sr.length - 1));// cut this"[]" out to get the object
+    var dt = JSON.stringify({
+        "ordersId": ts.ordersId,
+        "ordersName": ts.ordersName,
+        "machinesId": ts.machinesId,
+        "product": ts.product,
+        "resourceGroupName": ts.resourceGroupName,
+        "resourceName": ts.resourceName,
+        "setupStart": ts.setupStart,
+        "startTime": ts.startTime,
+        "endTime": ts.endTime,
+        "quantity": ts.quantity,
+        "actualQuantity": ts.actualQuantity,
+        "note": ts.note,
         "actusalSetupStart": datetime,
         "status": "Starting setup"
-    };
-    var dts = JSON.stringify(dt);
-    console.log(dts);
+    });
+   
+    console.log(dt);
     $.ajax({
         type: 'PUT',
         url: 'https://localhost:7093/api/orders',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json;'
         },
         dataType: 'json',
-        data: dts,
+        data: dt,
         success: function (data) {
             alert("Start running")
             console.log(data);
