@@ -1,14 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using DemoGAPI.Models;
 using DemoGAPI.Extensions;
+using DemoGAPI.Repository;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+     .AddNewtonsoftJson() ;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddDbContext<DG1Context>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("constring")));
+//builder.Services.AddDbContext<DG1Context>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("constring")));
+builder.Services.AddDbContext<OpcenterAPS181DEMOforVietBayContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("constringx")));
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 // Add services to the container.
 builder.Services.AddJWTTokenServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
@@ -45,6 +50,7 @@ builder.Services.AddCors(options =>
         });
 
 });
+
 
 
 
