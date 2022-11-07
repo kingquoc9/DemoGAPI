@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\lib\datatable\" />
+    <Folder Include="wwwroot\iconandlogo\" />
   </ItemGroup>
 
 </Project>

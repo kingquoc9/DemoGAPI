@@ -26,7 +26,7 @@ namespace DemoGAPI.Repository
                               from b in _contextx.OrderStatuses
                               from c in _contextx.ResourceGroups
                               from d in _contextx.Resources
-                              where a.OrderStatus == b.OrderStatusId && a.Resource == d.ResourcesId && a.ResourceGroup == c.ResourceGroupsId
+                              where a.OrderStatus == b.OrderStatusId && a.Resource == d.ResourcesId && a.ResourceGroup == c.ResourceGroupsId && a.OrderStatus != 1 && a.OrderStatus != 2 && a.OrderStatus != 3
                               select new WorkOrder
                               {
                                   OrdersId = a.OrdersId,

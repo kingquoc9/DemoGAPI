@@ -26,13 +26,12 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="margin-left:0">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -48,6 +47,10 @@
     <script src="~/lib/datatable/datatables-1.12.1/js/jquery.datatables.js"></script>
     <script src="~/lib/datatable/datatables-1.12.1/js/dataTables.bootstrap5.js"></script>
     <script src="~/lib/datatable/fixedheader-3.2.4/js/fixedheader.bootstrap5.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.11.3/dataRender/datetime.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+    @*<script src="~/lib/datatable/moment.js"></script>
+    <script src="~/lib/datatable/datetime.js"></script>*@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -5,12 +5,12 @@
 
 <h1>DEMOS</h1>
 
-<table class="display" cellspacing="1" id="ot">
+<table class="display table-bordered" cellspacing="1" id="ot">
     <thead>
         <tr>
 
         </tr>
-        <tr>
+        <tr >
             <th>Orderid</th>
             <th>Ordersname</th>
             <th>Machinesid</th>
@@ -19,24 +19,42 @@
             <th>ResourceName</th>
             <th>SetupStart</th>
             <th>StartTime</th>
-            <th>EndTime</th>
+            <th style="min-width:120px">EndTime</th>
             <th>Quantity</th>
             <th>ActualQuantity</th>
-            <th>SetupStart</th>
-            <th>StartTime</th>
-            <th>EndTime</th>
+            <th>ActualSetupStart</th>
+            <th>ActualStartTime</th>
+            <th>ActualEndTime</th>
             <th>Note</th>
             <th>Status</th>
         </tr>
     </thead>
-    <tfoot>
+    <tfoot class="table-bordered">
         <tr>
             <th>Show Detail</th>
+            <th></th>
             <th id="StartS">Setup</th>
             <th id="Start">Start</th>
             <th id="Pause">Pause</th>
             <th id="Complete">Complete</th>
-            <th id="Cannel">Cannel</th>
+            <th id="Cancel">Cancel</th>
+            <th></th>
+            <th colspan="5">
+                <div class="form-horizontal form-group" style="float-left">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Số lượng:</label>
+                        <input style="min-width:300px" id="AQ" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Ghi chú:</label>
+                        <input style="min-width:300px" id="NS" />
+                    </div>
+                </div>
+                <div class="form-horizontal form-group" style="float-right">
+                    <button id="SGC"><i class="bi bi-check2-circle"></i></button>
+                </div>
+            </th>
+            <th></th>
         </tr>
     </tfoot>
   @*  <tbody id="Setwo">
