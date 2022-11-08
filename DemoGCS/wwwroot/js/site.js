@@ -75,7 +75,42 @@ $(document).ready(function () {
         document.getElementById("NS").defaultValue = JSON.stringify(ts.notes);
     });
     // Dropdown filter with multible checkboxs
-    
+    let dropdown = document.getElementById('odn');
+    dropdown.length = 0;
+
+    let defaultOption = document.createElement('option');
+    defaultOption.text = 'Chọn Mã hàng';
+
+    dropdown.add(defaultOption);
+    dropdown.selectedIndex = 0;
+
+    const url = 'https://localhost:7093/api/PO/GetAll';
+
+    fetch(url)
+        .then(
+            function (response) {
+                if (response.status !== 200) {
+                    console.warn('Looks like there was a problem. Status Code: ' +
+                        response.status);
+                    return;
+                }
+
+                // Examine the text in the response  
+                response.json().then(function (data) {
+                    let option;
+
+                    for (let i = 0; i < data.length; i++) {
+                        option = document.createElement('option');
+                        option.text = data[i].orderNo;
+                        option.value = data[i].orderNo;
+                        dropdown.add(option);
+                    }
+                });
+            }
+        )
+        .catch(function (err) {
+            console.error('Fetch Error -', err);
+        });
 });
 //Filter with checkbox
 $(document).on('FWC', 'input[name="checkBox"]', function () {
