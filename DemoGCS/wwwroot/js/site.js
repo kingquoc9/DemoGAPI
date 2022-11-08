@@ -12,7 +12,7 @@ $(document).ready(function () {
     /*$.fn.dataTable.moment('DD/MM/YYYY HH:mm:ss tt');*/
     $("#ot").DataTable({
         paging: false,
-        search: false,
+        bFilter: false,
         "ajax": {
             "type": "GET",
             "url": "https://localhost:7093/api/PO/GetAll",
@@ -71,7 +71,15 @@ $(document).ready(function () {
     });
     //
 });
-
+//Filter with checkbox
+$(document).on('FWC', 'input[name="checkBox"]', function () {
+    if (this.checked) {
+        tTable.columns(1).search("1").draw();
+    } else {
+        tTable.columns(1).search("").draw();
+    }
+});
+//
 var currentdate = new Date();
 var datetime = currentdate.getFullYear(0) + "-"
     + ("0" + (currentdate.getMonth(0) + 1)).slice(-2) + "-"
@@ -137,7 +145,7 @@ $('#Pause').click(function () {
         dataType: 'json',
         data: JSON.stringify(data),
         success: function (data) {
-            alert("Start running")
+            alert("Pausing")
             console.log(data);
         }
     });
@@ -169,7 +177,7 @@ $('#StartS').click(function () {
         dataType: 'json',
         data: JSON.stringify(data),
         success: function (data) {
-            alert("Start running")
+            alert("Starting Setup")
             console.log(data);
         }
     });
@@ -202,7 +210,7 @@ $('#Complete').click(function () {
         dataType: 'json',
         data: JSON.stringify(data),
         success: function (data) {
-            alert("Start running")
+            alert("Process Complete")
             console.log(data);
         }
     });
@@ -230,7 +238,7 @@ $('#Cancel').click(function () {
         dataType: 'json',
         data: JSON.stringify(data),
         success: function (data) {
-            alert("Start running")
+            alert("Stopping")
             console.log(data);
         }
     });
@@ -246,3 +254,35 @@ onload = function () {
         }
     }
 }
+$('#IAN').click(function () {
+    var t = $('#ot').DataTable();
+    var sr = JSON.stringify(t.rows('.selected').data().toArray());
+    var ts = JSON.parse(sr.substring(1, sr.length - 1));// cut this"[]" out to get the object
+    var did = JSON.stringify(ts.datasetId);
+    var oid = JSON.stringify(ts.ordersId);
+    var data = [{
+        "op": "replace",
+        "path": "ActualQuantity",
+        "value": document.getElementById("AQ").value
+    },
+    {
+        "op": "replace",
+        "path": "Notes",
+        "value": document.getElementById("NS").value
+    }];
+    console.log(data)
+    $.ajax({
+        type: 'PATCH',
+        url: 'https://localhost:7093/api/PO/' + did + '/' + oid,
+        headers: {
+            'Content-Type': 'application/json;'
+        },
+        dataType: 'json',
+        data: JSON.stringify(data),
+        success: function (data) {
+            alert("Confirm Change")
+            console.log(data);
+        }
+    });
+
+});
