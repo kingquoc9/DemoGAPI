@@ -67,9 +67,15 @@ $(document).ready(function () {
         } else {
             $('#ot').DataTable().$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
-        }
+        };
+        //bind data to 2 input element in Ghi chú and Số lượng
+        var sr = JSON.stringify($('#ot').DataTable().rows('.selected').data().toArray());
+        var ts = JSON.parse(sr.substring(1, sr.length - 1));// cut this"[]" out to get the object
+        document.getElementById("AQ").defaultValue = JSON.stringify(ts.actualQuantity);
+        document.getElementById("NS").defaultValue = JSON.stringify(ts.notes);
     });
-    //
+    // Dropdown filter with multible checkboxs
+    
 });
 //Filter with checkbox
 $(document).on('FWC', 'input[name="checkBox"]', function () {
@@ -243,17 +249,7 @@ $('#Cancel').click(function () {
         }
     });
 });
-// Input Số lượng and Ghi chú
-onload = function () {
-    if (!document.getElementsByTagName || !document.createTextNode) return;
-    var rows = document.getElementById('ot').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-    for (i = 0; i < rows.length; i++) {
-        rows[i].onclick = function () {
-            document.getElementById("AQ").value = this.cells[10].innerHTML;
-            document.getElementById("NS").value = this.cells[14].innerHTML;
-        }
-    }
-}
+// Input Số lượng and Ghi chú button
 $('#IAN').click(function () {
     var t = $('#ot').DataTable();
     var sr = JSON.stringify(t.rows('.selected').data().toArray());
@@ -262,7 +258,7 @@ $('#IAN').click(function () {
     var oid = JSON.stringify(ts.ordersId);
     var data = [{
         "op": "replace",
-        "path": "ActualQuantity",
+        "path": "TableAttribute1",
         "value": document.getElementById("AQ").value
     },
     {

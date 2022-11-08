@@ -17,3 +17,8 @@ body {
     
     margin-bottom: 60px;
 }
+th{
+    min-width:170px;
+    
+}
+/*Css form filter*/
