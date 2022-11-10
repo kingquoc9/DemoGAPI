@@ -9,9 +9,9 @@
     <thead>
         <tr>
             <th colspan="3">
-               <div class="form-group row">
-                <label for="odn">Lệnh sản xuất:</label>
-                <select multiple name="odn" id="odn" class="filter-multi-select">
+               <div class="form-group row" style="padding:4px">
+                Lệnh sản xuất : 
+                <select name="odn" id="odn"  style="width:50%;">
                        
                 </select>
                </div>
@@ -21,7 +21,9 @@
             </th>
             <th colspan="2"></th>
             <th colspan="2">
-
+                <button id="BD"><i class="fa-solid fa-caret-left"></i></button>
+                <input id="DF" style="text-align:center; width:30%" />
+                <button id="ND"><i class="fa-solid fa-caret-right"></i></button>
             </th>
             <th colspan="4"></th>
             <th colspan="3">
@@ -29,7 +31,7 @@
             </th>
         </tr>
         <tr >
-            <th>Orderid</th>
+            <th style="min-width:110px">Orderid</th>
             <th>Ordersname</th>
             <th>Machinesid</th>
             <th>Product</th>
@@ -49,7 +51,7 @@
     </thead>
     <tfoot class="table-bordered">
         <tr>
-            <th>Show Detail</th>
+            <th style="min-width:110px">Show Detail</th>
             <th></th>
             <th id="StartS">Setup</th>
             <th id="Start">Start</th>

@@ -21,4 +21,8 @@ th{
     min-width:170px;
     
 }
+.dataTables_wrapper .dataTables_filter {
+    
+    visibility: hidden;
+}
 /*Css form filter*/

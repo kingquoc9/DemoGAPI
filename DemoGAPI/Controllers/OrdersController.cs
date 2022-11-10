@@ -7,7 +7,8 @@
 //using System.Linq.Expressions;
 //using System.Linq;
 
-//namespace DemoGAPI.Controllers
+
+//namespace DemoGAPI.controllers
 //{
 //    [Route("api/[controller]")]
 //    [ApiController]
@@ -19,86 +20,86 @@
 //            _contextx = contextx;
 //        }
 //        [HttpGet]
-
-//        public async Task<ActionResult<IEnumerable<Order>>> GetAllOrders()
+//        [Route("GetAllO")]
+//        public async Task<ActionResult<IEnumerable<Order>>> Getallorders()
 //        {
 //            return await _contextx.Orders.ToListAsync();
 //        }
-//        //[HttpGet]
-//        //public async Task<IEnumerable<Order>> GetAOrders()
-//        //{
-//        //    var od = await _contextx.Orders.Select(x => new Order()
-//        //    {
-//        //        OrdersId = x.OrdersId,
-//        //        DatasetId = x.DatasetId,
-//        //        OrderNo = x.OrderNo,
-//        //        PartNo = x.PartNo,
-//        //        Product = x.Product,
-//        //        ResourceGroup = x.ResourceGroup,
-//        //        Resource = x.Resource,
-//        //        SetupStart = x.SetupStart,
-//        //        StartTime = x.StartTime,
-//        //        EndTime = x.EndTime,
-//        //        Quantity = x.Quantity,
-//        //        TableAttribute1 = x.TableAttribute1,
-//        //        ActualSetupStart = x.ActualSetupStart, 
-//        //        ActualStartTime = x.ActualStartTime,
-//        //        ActualEndTime = x.ActualEndTime,
-//        //        Notes = x.Notes,
-//        //        OrderStatus = x.OrderStatus
-//        //    }).ToListAsync() ;
-//        //    return od; 
-//        //}
-//        //Update WorkOrders
-//        //[HttpPut]
-//        ////  [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
-//        //public async Task<IActionResult> UpdateStart( Order orderData)
-//        //{
-//        //    if (orderData == null || orderData.OrdersId == 0 )
-//        //        return BadRequest();
+        ////[httpget]
+        ////public async task<ienumerable<order>> getaorders()
+        ////{
+        ////    var od = await _contextx.orders.select(x => new order()
+        ////    {
+        ////        ordersid = x.ordersid,
+        ////        datasetid = x.datasetid,
+        ////        orderno = x.orderno,
+        ////        partno = x.partno,
+        ////        product = x.product,
+        ////        resourcegroup = x.resourcegroup,
+        ////        resource = x.resource,
+        ////        setupstart = x.setupstart,
+        ////        starttime = x.starttime,
+        ////        endtime = x.endtime,
+        ////        quantity = x.quantity,
+        ////        tableattribute1 = x.tableattribute1,
+        ////        actualsetupstart = x.actualsetupstart, 
+        ////        actualstarttime = x.actualstarttime,
+        ////        actualendtime = x.actualendtime,
+        ////        notes = x.notes,
+        ////        orderstatus = x.orderstatus
+        ////    }).tolistasync() ;
+        ////    return od; 
+        ////}
+        ////update workorders
+        ////[httpput]
+        //////  [authorize(authenticationschemes = microsoft.aspnetcore.authentication.jwtbearer.jwtbearerdefaults.authenticationscheme)]
+        ////public async task<iactionresult> updatestart( order orderdata)
+        ////{
+        ////    if (orderdata == null || orderdata.ordersid == 0 )
+        ////        return badrequest();
 
-//        //    var order = await _contextx.Orders.FindAsync(orderData.OrdersId);
-//        //    if (order == null)
-//        //        return NotFound();
-//        //    order.ActualStartTime = orderData.ActualStartTime;
-//        //    order.OrderStatus = orderData.OrderStatus;
+        ////    var order = await _contextx.orders.findasync(orderdata.ordersid);
+        ////    if (order == null)
+        ////        return notfound();
+        ////    order.actualstarttime = orderdata.actualstarttime;
+        ////    order.orderstatus = orderdata.orderstatus;
 
 
-//        //    await _contextx.SaveChangesAsync();
-//        //    return Ok();
-//        //}
-//        [HttpPut("{id}/{ids}")]
-//        public async Task<IActionResult> PutOrder(int id,int ids, Order order)
-//        {
-//            if (id != order.DatasetId && ids != order.OrdersId)
-//            {
-//                return BadRequest();
-//            }
+        ////    await _contextx.savechangesasync();
+        ////    return ok();
+        ////}
+        //[httpput("{id}/{ids}")]
+        //public async task<iactionresult> putorder(int id, int ids, order order)
+        //{
+        //    if (id != order.datasetid && ids != order.ordersid)
+        //    {
+        //        return badrequest();
+        //    }
 
-//            _contextx.Entry(order).State = EntityState.Modified;
+        //    _contextx.entry(order).state = entitystate.modified;
 
-//            try
-//            {
-//                await _contextx.SaveChangesAsync();
-//            }
-//            catch (DbUpdateConcurrencyException)
-//            {
-//                if (!OrderExists(id))
-//                {
-//                    return NotFound();
-//                }
-//                else
-//                {
-//                    throw;
-//                }
-//            }
+        //    try
+        //    {
+        //        await _contextx.savechangesasync();
+        //    }
+        //    catch (dbupdateconcurrencyexception)
+        //    {
+        //        if (!orderexists(id))
+        //        {
+        //            return notfound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-//            return NoContent();
-//        }
-//        private bool OrderExists(int id)
-//        {
-//            return _contextx.Orders.Any(e => e.DatasetId == id);
-//        }
+        //    return nocontent();
+        //}
+        //private bool orderexists(int id)
+        //{
+        //    return _contextx.orders.any(e => e.datasetid == id);
+        //}
 
 //    }
 //}

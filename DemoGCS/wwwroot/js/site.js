@@ -7,19 +7,37 @@
 
 //search theo ngay setup
 $(document).ready(function () {
-    // load data to table
     
-    /*$.fn.dataTable.moment('DD/MM/YYYY HH:mm:ss tt');*/
+    //load OrderNo to dropdownlist 
+    var select = $('<select><option value=""></option></select>')
+    $.ajax({
+        type: 'GET',
+        url: 'https://localhost:7093/api/PO/GetAll',
+        headers: {
+            'Content-Type': 'application/json;'
+        },
+        dataType:'json',
+        success: function (data) {
+            $.each(data, function (i, value) {
+                $('#odn').append($('<option>').text(value.orderNo).attr('value', value.orderNo));
+            })
+        }
+    });
+    //add filter function to dropdownlist
+    $('#odn').change(function () {
+        $("#ot").dataTable().fnFilter($(this).val());
+    });
+    // load data to table
     $("#ot").DataTable({
         paging: false,
-        bFilter: false,
+        
         "ajax": {
             "type": "GET",
             "url": "https://localhost:7093/api/PO/GetAll",
             "dataType": "json",
             "dataSrc": "",
         },
-       
+
         "columns": [
             { "data": "ordersId" },
             { "data": "orderNo" },
@@ -30,36 +48,41 @@ $(document).ready(function () {
             {
                 "data": "setupStart",
                 //type: 'date',
-                render: $.fn.dataTable.render.moment("YYYY-MM-DDTHH:mm:ss" & "YYYY-MM-DDTHH:mm:ss.SSSS" ,"DD/MM/YYYY HH:mm:ss a") },
+                render: $.fn.dataTable.render.moment("YYYY-MM-DDTHH:mm:ss" & "YYYY-MM-DDTHH:mm:ss.SSSS", "DD/MM/YYYY HH:mm:ss a")
+            },
             {
                 "data": "startTime",
                 //type: 'date',
-                render: $.fn.dataTable.render.moment("YYYY-MM-DDTHH:mm:ss" & "YYYY-MM-DDTHH:mm:ss.SSSS", "DD/MM/YYYY HH:mm:ss a") 
-            },   
+                render: $.fn.dataTable.render.moment("YYYY-MM-DDTHH:mm:ss" & "YYYY-MM-DDTHH:mm:ss.SSSS", "DD/MM/YYYY HH:mm:ss a")
+            },
             {
                 "data": "endTime",
                 //type: 'date',
-                render: $.fn.dataTable.render.moment("YYYY-MM-DDTHH:mm:ss" & "YYYY-MM-DDTHH:mm:ss.SSSS", "DD/MM/YYYY HH:mm:ss a")},
+                render: $.fn.dataTable.render.moment("YYYY-MM-DDTHH:mm:ss" & "YYYY-MM-DDTHH:mm:ss.SSSS", "DD/MM/YYYY HH:mm:ss a")
+            },
             { "data": "quantity" },
             { "data": "actualQuantity" },
             {
                 "data": "actualSetupStart",
                 //type: 'date',
-                render: $.fn.dataTable.render.moment("YYYY-MM-DDTHH:mm:ss" & "YYYY-MM-DDTHH:mm:ss.SSSS", "DD/MM/YYYY HH:mm:ss a") },
+                render: $.fn.dataTable.render.moment("YYYY-MM-DDTHH:mm:ss" & "YYYY-MM-DDTHH:mm:ss.SSSS", "DD/MM/YYYY HH:mm:ss a")
+            },
             {
                 "data": "actualStartTime",
                 //type: 'date',
-                render: $.fn.dataTable.render.moment("YYYY-MM-DDTHH:mm:ss" & "YYYY-MM-DDTHH:mm:ss.SSSS", "DD/MM/YYYY HH:mm:ss a") },
+                render: $.fn.dataTable.render.moment("YYYY-MM-DDTHH:mm:ss" & "YYYY-MM-DDTHH:mm:ss.SSSS", "DD/MM/YYYY HH:mm:ss a")
+            },
             {
                 "data": "actualEndTime",
                 //type: 'date',
-                render: $.fn.dataTable.render.moment("YYYY-MM-DDTHH:mm:ss" & "YYYY-MM-DDTHH:mm:ss.SSSS", "DD/MM/YYYY HH:mm:ss a") },
+                render: $.fn.dataTable.render.moment("YYYY-MM-DDTHH:mm:ss" & "YYYY-MM-DDTHH:mm:ss.SSSS", "DD/MM/YYYY HH:mm:ss a")
+            },
             { "data": "notes" },
             { "data": "orderStatus" }
-        ]
-      
+        ],
+        
     });
-
+    
     //toggle selected
     $('#ot tbody').on('click', 'tr', function () {
         if ($(this).hasClass('selected')) {
@@ -72,54 +95,53 @@ $(document).ready(function () {
         var sr = JSON.stringify($('#ot').DataTable().rows('.selected').data().toArray());
         var ts = JSON.parse(sr.substring(1, sr.length - 1));// cut this"[]" out to get the object
         document.getElementById("AQ").defaultValue = JSON.stringify(ts.actualQuantity);
-        document.getElementById("NS").defaultValue = JSON.stringify(ts.notes);
+        document.getElementById("NS").defaultValue = JSON.stringify(ts.notes).substring(1, JSON.stringify(ts.notes).length -1 );
+        
     });
-    // Dropdown filter with multible checkboxs
-    let dropdown = document.getElementById('odn');
-    dropdown.length = 0;
 
-    let defaultOption = document.createElement('option');
-    defaultOption.text = 'Chọn Mã hàng';
+   //Date filter
+    var now = new Date();
+    var month = (now.getMonth() + 1);
+    var day = now.getDate();
+    if (month < 10)
+        month = "0" + month;
+    if (day < 10)
+        day = "0" + day;
+    var today = day + '/' + month + '/' + now.getFullYear();
+    $('#DF').val(today).submit();
+    
+    $('#DF').change(function () {
 
-    dropdown.add(defaultOption);
-    dropdown.selectedIndex = 0;
+        $("#ot").dataTable().fnFilter($(this).val());
+    });
+    // ND and BD button
+    $('#ND').click(function () {
+        now.setDate(now.getDate() + 1);
+        var months = (now.getMonth() + 1);
+        var days = now.getDate();
+        if (months < 10)
+            months = "0" + months;
+        if (days < 10)
+            days = "0" + days;
+        var nds = days + '/' + months + '/' + now.getFullYear();
+        $('#DF').val(nds).submit();
+        
+    });
 
-    const url = 'https://localhost:7093/api/PO/GetAll';
-
-    fetch(url)
-        .then(
-            function (response) {
-                if (response.status !== 200) {
-                    console.warn('Looks like there was a problem. Status Code: ' +
-                        response.status);
-                    return;
-                }
-
-                // Examine the text in the response  
-                response.json().then(function (data) {
-                    let option;
-
-                    for (let i = 0; i < data.length; i++) {
-                        option = document.createElement('option');
-                        option.text = data[i].orderNo;
-                        option.value = data[i].orderNo;
-                        dropdown.add(option);
-                    }
-                });
-            }
-        )
-        .catch(function (err) {
-            console.error('Fetch Error -', err);
-        });
+    $('#BD').click(function () {
+        now.setDate(now.getDate() - 1);
+        var months = (now.getMonth() + 1);
+        var days = now.getDate();
+        if (months < 10)
+            months = "0" + months;
+        if (days < 10)
+            days = "0" + days;
+        var nds = days + '/' + months + '/' + now.getFullYear();
+        $('#DF').val(nds).submit();
+    });
 });
-//Filter with checkbox
-$(document).on('FWC', 'input[name="checkBox"]', function () {
-    if (this.checked) {
-        tTable.columns(1).search("1").draw();
-    } else {
-        tTable.columns(1).search("").draw();
-    }
-});
+
+
 //
 var currentdate = new Date();
 var datetime = currentdate.getFullYear(0) + "-"
@@ -147,7 +169,7 @@ $('#Start').click(function () {
         "path": "OrderStatus",
         "value": "5"
         }];
-    console.log(data)
+    
     $.ajax({
         type: 'PATCH',
         url: 'https://localhost:7093/api/PO/' + did + '/' + oid,
@@ -158,7 +180,7 @@ $('#Start').click(function () {
         data: JSON.stringify(data),
         success: function (data) {
             alert("Start running")
-            console.log(data);
+            $('#ot').DataTable().ajax.reload();
         }
     });
 
@@ -187,7 +209,7 @@ $('#Pause').click(function () {
         data: JSON.stringify(data),
         success: function (data) {
             alert("Pausing")
-            console.log(data);
+            $('#ot').DataTable().ajax.reload();
         }
     });
 });
@@ -219,7 +241,7 @@ $('#StartS').click(function () {
         data: JSON.stringify(data),
         success: function (data) {
             alert("Starting Setup")
-            console.log(data);
+            $('#ot').DataTable().ajax.reload();
         }
     });
 
@@ -252,7 +274,7 @@ $('#Complete').click(function () {
         data: JSON.stringify(data),
         success: function (data) {
             alert("Process Complete")
-            console.log(data);
+            $('#ot').DataTable().ajax.reload();
         }
     });
 });
@@ -280,7 +302,7 @@ $('#Cancel').click(function () {
         data: JSON.stringify(data),
         success: function (data) {
             alert("Stopping")
-            console.log(data);
+            $('#ot').DataTable().ajax.reload();
         }
     });
 });
@@ -312,8 +334,9 @@ $('#IAN').click(function () {
         data: JSON.stringify(data),
         success: function (data) {
             alert("Confirm Change")
-            console.log(data);
+            $('#ot').DataTable().ajax.reload();
         }
     });
-
+    
 });
+

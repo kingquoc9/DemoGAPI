@@ -20,7 +20,7 @@ namespace DemoGAPI.Controllers
         {
             pr = _pr;
         }
-
+       
 
         [HttpGet]
         [Route("GetAll")]
