@@ -91,10 +91,32 @@ $(document).ready(function () {
 
     });
     //set time table reload
+    //setInterval(function () {
+    //    $('#ot').DataTable().ajax.reload(null, false); // user paging is not reset on reload
+    //}, 60000);
     setInterval(function () {
-        $('#ot').DataTable().ajax.reload(null, false); // user paging is not reset on reload
-    }, 60000);
-
+        var tb = JSON.stringify($('#ot').DataTable().data().toArray());
+        $.ajax({
+            type: 'GET',
+            url: 'https://localhost:7093/api/PO/GetAll',
+            headers: {
+                'Content-Type': 'application/json;'
+            },
+            dataType: 'json',
+            success: function (data) {
+                 
+                var tdb = JSON.stringify(data);
+                if (tb == tdb) {
+                    return;
+                }
+                else {
+                    $('#ot').DataTable().ajax.reload(null, false);
+                }
+            }
+        });  
+                 
+        
+    }, 20000);
     //toggle selected
     $('#ot tbody').on('click', 'tr', function () {
         if ($(this).hasClass('selected')) {
