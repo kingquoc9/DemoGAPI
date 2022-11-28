@@ -3,34 +3,42 @@
 
 // Write your JavaScript code.
 
-
-
-//search theo ngay setup
 $(document).ready(function () {
-    
     //load OrderNo to dropdownlist 
-    var select = $('<select><option value=""></option></select>')
     $.ajax({
         type: 'GET',
-        url: 'https://localhost:7093/api/PO/GetAll',
+        url: 'https://localhost:7093/api/PO/GetAllID',
         headers: {
             'Content-Type': 'application/json;'
         },
-        dataType:'json',
+        dataType: 'json',
         success: function (data) {
+
             $.each(data, function (i, value) {
                 $('#odn').append($('<option>').text(value.orderNo).attr('value', value.orderNo));
-            })
+            });
+            var select = new vanillaSelectBox("#odn", {
+                search: true,
+                placeHolder: "Chọn mã hàng",
+                maxWidth: 540,
+                maxHeight: 400,
+                minWidth: -1,
+                maxOptionWidth: 480,
+                itemsSeparator: "||"
+                
+            });
         }
     });
-    //add filter function to dropdownlist
+    //add filter function to dropdownlist  
     $('#odn').change(function () {
-        $("#ot").dataTable().fnFilter($(this).val());
+        $("#ot").dataTable().fnFilter($(this).val().join("||"), 1, true, false);
     });
     // load data to table
     $("#ot").DataTable({
-        paging: false,
         
+        "search": {
+            "regex": true
+        },
         "ajax": {
             "type": "GET",
             "url": "https://localhost:7093/api/PO/GetAll",
@@ -79,10 +87,14 @@ $(document).ready(function () {
             },
             { "data": "notes" },
             { "data": "orderStatus" }
-        ],
-        
+        ]
+
     });
-    
+    //set time table reload
+    setInterval(function () {
+        $('#ot').DataTable().ajax.reload(null, false); // user paging is not reset on reload
+    }, 60000);
+
     //toggle selected
     $('#ot tbody').on('click', 'tr', function () {
         if ($(this).hasClass('selected')) {
@@ -94,12 +106,19 @@ $(document).ready(function () {
         //bind data to 2 input element in Ghi chú and Số lượng
         var sr = JSON.stringify($('#ot').DataTable().rows('.selected').data().toArray());
         var ts = JSON.parse(sr.substring(1, sr.length - 1));// cut this"[]" out to get the object
-        document.getElementById("AQ").defaultValue = JSON.stringify(ts.actualQuantity);
-        document.getElementById("NS").defaultValue = JSON.stringify(ts.notes).substring(1, JSON.stringify(ts.notes).length -1 );
-        
+        document.getElementById("AQ").value = JSON.stringify(ts.actualQuantity);
+        document.getElementById("NS").value = JSON.stringify(ts.notes).substring(1, JSON.stringify(ts.notes).length - 1);
+       
     });
+    //Reset filter in date
+    $('#RS').click(function () {
+        $("#ot").dataTable().fnFilter($(this).val(), 6, true, false);
+    });
+    //Date filter  
+    $('#DF').click(function () {
 
-   //Date filter
+        $("#ot").dataTable().fnFilter($(this).val(), 6, true, false);
+    });
     var now = new Date();
     var month = (now.getMonth() + 1);
     var day = now.getDate();
@@ -107,42 +126,70 @@ $(document).ready(function () {
         month = "0" + month;
     if (day < 10)
         day = "0" + day;
-    var today = day + '/' + month + '/' + now.getFullYear();
-    $('#DF').val(today).submit();
-    
-    $('#DF').change(function () {
-
-        $("#ot").dataTable().fnFilter($(this).val());
-    });
+    var dt = day + '/' + month + '/' + now.getFullYear();
+    $('#DF').val(dt);
+    $('#DF').click();
     // ND and BD button
     $('#ND').click(function () {
-        now.setDate(now.getDate() + 1);
-        var months = (now.getMonth() + 1);
-        var days = now.getDate();
-        if (months < 10)
-            months = "0" + months;
-        if (days < 10)
-            days = "0" + days;
-        var nds = days + '/' + months + '/' + now.getFullYear();
-        $('#DF').val(nds).submit();
-        
-    });
+        var nd = new Date(moment(document.getElementById("DF").value, "DD/MM/YYYY"));
+        nd.setDate(nd.getDate() + 1);
+        var month = (nd.getMonth() + 1);
+        var day = nd.getDate();
+        if (month < 10)
+            month = "0" + month;
+        if (day < 10)
+            day = "0" + day;
+        var dt = day + '/' + month + '/' + now.getFullYear();
 
+        $('#DF').val(dt);
+        $('#DF').click();
+    });
     $('#BD').click(function () {
-        now.setDate(now.getDate() - 1);
-        var months = (now.getMonth() + 1);
-        var days = now.getDate();
-        if (months < 10)
-            months = "0" + months;
-        if (days < 10)
-            days = "0" + days;
-        var nds = days + '/' + months + '/' + now.getFullYear();
-        $('#DF').val(nds).submit();
+        var nd = new Date(moment(document.getElementById("DF").value, "DD/MM/YYYY"));
+        nd.setDate(nd.getDate() - 1);
+        var month = (nd.getMonth() + 1);
+        var day = nd.getDate();
+        if (month < 10)
+            month = "0" + month;
+        if (day < 10)
+            day = "0" + day;
+        var dt = day + '/' + month + '/' + now.getFullYear();
+
+        $('#DF').val(dt);
+        $('#DF').click();
+    });
+    // Calenlar button
+    
+        
+    $('#CD').click(function () {
+        $('#DF').datepicker({
+            format: "dd/mm/yyyy",
+            startView: "days",
+            minViewMode: "days"
+        });
+        $('#DF').datepicker('show');
+        $('#DF').change(function () { 
+            $('#DF').click();
+        });
+    });
+    // Calenlar with month
+
+    
+    $('#CDM').click(function () {
+        $('#DF').datepicker({
+            format: "mm/yyyy",
+            startView: "months",
+            minViewMode: "months"
+        });
+        $('#DF').datepicker('show');
+        $('#DF').change(function () {
+            $('#DF').click();
+        });
     });
 });
-
-
 //
+
+//Get currentdate time
 var currentdate = new Date();
 var datetime = currentdate.getFullYear(0) + "-"
     + ("0" + (currentdate.getMonth(0) + 1)).slice(-2) + "-"
@@ -308,8 +355,8 @@ $('#Cancel').click(function () {
 });
 // Input Số lượng and Ghi chú button
 $('#IAN').click(function () {
-    var t = $('#ot').DataTable();
-    var sr = JSON.stringify(t.rows('.selected').data().toArray());
+ 
+    var sr = JSON.stringify($('#ot').DataTable().rows('.selected').data().toArray());
     var ts = JSON.parse(sr.substring(1, sr.length - 1));// cut this"[]" out to get the object
     var did = JSON.stringify(ts.datasetId);
     var oid = JSON.stringify(ts.ordersId);
@@ -333,7 +380,7 @@ $('#IAN').click(function () {
         dataType: 'json',
         data: JSON.stringify(data),
         success: function (data) {
-            alert("Confirm Change")
+            alert("Confirm Change");
             $('#ot').DataTable().ajax.reload();
         }
     });

@@ -41,6 +41,25 @@ namespace DemoGAPI.Controllers
                 return BadRequest();
             }
         }
+        [HttpGet]
+        [Route("GetAllID")]
+        public async Task<IActionResult> GetPostsid()
+        {
+            try
+            {
+                var orders = await pr.GetPostsid();
+                if (orders == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(orders);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
         [HttpPatch]
         [Route("{did}/{oid}")]
         

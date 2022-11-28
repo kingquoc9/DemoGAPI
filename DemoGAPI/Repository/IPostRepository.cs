@@ -10,7 +10,7 @@ namespace DemoGAPI.Repository
 {
     public interface IPostRepository
     {
-    
+        Task<List<onlyidno>> GetPostsid();
         Task<List<WorkOrder>> GetPosts();
         Task<Order> UpdateOrderPatchAsync(int did, int oid, JsonPatchDocument orderData);
     }

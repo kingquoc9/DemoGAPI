@@ -5,60 +5,68 @@
 
 <h1>DEMOS</h1>
 
-<table class="display table-bordered" cellspacing="1" id="ot">
+<table class="display " cellspacing="1" id="ot">
     <thead>
         <tr>
             <th colspan="3">
                <div class="form-group row" style="padding:4px">
-                Lệnh sản xuất : 
-                <select name="odn" id="odn"  style="width:50%;">
-                       
-                </select>
+                    <label for="odn">Lệnh sản xuất :</label>
+                    <select name="odn" id="odn" multiple  style="width:50%;">
+                    </select>
+                    <i class="bi bi-caret-down-fill"></i>
                </div>
             </th>
             <th colspan="2">
-
+       
+            <input type="checkbox" class="column_filter" id="col1_regex" checked="checked" hidden>
+            
+     
             </th>
             <th colspan="2"></th>
             <th colspan="2">
+                
+                <label id="LB"></label>
                 <button id="BD"><i class="fa-solid fa-caret-left"></i></button>
-                <input id="DF" style="text-align:center; width:30%" />
+                <button id="CD"><i class='fas fa-calendar-alt' style='color: black'></i></button>
+                <input id="DF" disabled style="text-align:center; width:30%;background-color: #1e478e;color: #ffffff;" />
+                <button id="CDM"><i class="fa-sharp fa-solid fa-calendar" style='color: black'></i></i></button>
                 <button id="ND"><i class="fa-solid fa-caret-right"></i></button>
+                <button id="RS"><i class="fa-solid fa-clipboard-list"></i></button>
             </th>
             <th colspan="4"></th>
             <th colspan="3">
-
+          
             </th>
         </tr>
         <tr >
-            <th style="min-width:110px">Orderid</th>
+            <th style="min-width:60px">Orderid</th>
             <th>Ordersname</th>
-            <th>Machinesid</th>
-            <th>Product</th>
+            <th style="min-width:150px">Machinesid</th>
+            <th style="min-width:150px">Product</th>
             <th>ResourceGroupName</th>
-            <th>ResourceName</th>
+            <th style ="min-width:120px">ResourceName</th>
             <th>SetupStart</th>
             <th>StartTime</th>
             <th>EndTime</th>
-            <th>Quantity</th>
-            <th>ActualQuantity</th>
+            <th style="min-width:80px">Quantity</th>
+            <th style="min-width:100px">ActualQuantity</th>
             <th>ActualSetupStart</th>
             <th>ActualStartTime</th>
             <th>ActualEndTime</th>
-            <th>Note</th>
-            <th>Status</th>
+            <th style="min-width:100px">Note</th>
+            <th style="min-width:80px">Status</th>
         </tr>
     </thead>
     <tfoot class="table-bordered">
         <tr>
-            <th style="min-width:110px">Show Detail</th>
+            <th style="min-width:60px">Show Detail</th>
             <th></th>
-            <th id="StartS">Setup</th>
-            <th id="Start">Start</th>
-            <th id="Pause">Pause</th>
-            <th id="Complete">Complete</th>
-            <th id="Cancel">Cancel</th>
-            <th></th>
+            <th id="StartS"><i class="fa-solid fa-power-off fa-2xl"></i>&nbsp Setup</th>
+            <th id="Start"><i class="fa-solid fa-play fa-2xl"></i>&nbsp Start</th>
+            <th id="Pause"><i class="fa-solid fa-pause fa-2xl"></i>&nbsp Pause</th>
+            <th id="Complete"><i class="fa-sharp fa-solid fa-square-check fa-2xl"></i>&nbsp Complete</th>
+            <th id="Cancel"><i class="fa-solid fa-stop fa-2xl"></i>&nbsp Cancel</th>
+            
             <th colspan="4">
                 <div class="form-horizontal form-group" style="float-left">
                     <div class="form-group" style="padding:3px">
@@ -74,7 +82,7 @@
             <th style="height:70px" id="IAN">
                 <i class="fa-solid fa-circle-check" style="font-size:70px;color:green;margin-left:25%;"></i>
             </th>
-            <th colspan="3"></th>
+            <th colspan="4"></th>
         </tr>
     </tfoot>
 </table>

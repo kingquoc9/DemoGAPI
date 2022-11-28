@@ -17,12 +17,22 @@ body {
     
     margin-bottom: 60px;
 }
-th{
+th {
+    background-color: #1e478e;
+    color: #ffffff;
     min-width:170px;
-    
+}
+td {
+    background-color: #EEF1FF;
 }
 .dataTables_wrapper .dataTables_filter {
     
     visibility: hidden;
 }
-/*Css form filter*/
+.caret {
+    visibility: hidden;
+}
+div.dataTables_wrapper div.dataTables_length select {
+    min-width:60px;
+}
+    /*Css form filter*/
